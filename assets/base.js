@@ -171,4 +171,32 @@ document.querySelectorAll('[data-lead-form]').forEach((form) => {
   });
 });
 
+/* Поля первого экрана ведут к единственной форме заявки: значения переносятся
+   в неё, страница прокручивается к согласию. Двух согласий на странице нет. */
+document.querySelectorAll('[data-lead-handoff]').forEach((form) => {
+  const status = form.querySelector('[data-status]');
+  const target = document.querySelector(form.dataset.leadHandoff);
+  if (!target) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const tel = form.querySelector('[data-mask="tel"]');
+    if (tel && tel.value.replace(/\D/g, '').length < 11) {
+      if (status) status.textContent = 'Проверьте телефон: нужен номер целиком, 11 цифр.';
+      tel.focus();
+      return;
+    }
+    /* namedItem, а не form.elements[key]: у ['item'] в коллекции есть
+       одноимённый метод HTMLCollection.item, и скобочная запись вернёт его. */
+    ['phone', 'email', 'item'].forEach((key) => {
+      const src = form.elements.namedItem(key);
+      const dst = target.elements.namedItem(key);
+      if (src && dst && src.value && src.value.trim()) dst.value = src.value.trim();
+    });
+    if (status) status.textContent = 'Поля перенесены — подтвердите согласие и отправьте заявку ниже.';
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    (target.querySelector('input[name="consent"]') || target.querySelector('button[type="submit"]'))
+      ?.focus({ preventScroll: true });
+  });
+});
+
 export { progress };

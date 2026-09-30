@@ -179,7 +179,9 @@ a { color: inherit; }
 .route p { color: var(--muted); font-size: var(--s1); }
 .route form { display: grid; gap: .75rem; margin-top: var(--s2); }
 .route input[type="url"],
-.route input[type="text"] {
+.route input[type="text"],
+.route input[type="tel"],
+.route input[type="email"] {
   width: 100%;
   min-height: 50px;
   padding: .75rem 1rem;
@@ -188,6 +190,8 @@ a { color: inherit; }
   background: #FFFFFF;
   color: var(--ink);
 }
+/* Поля карточки идут через общий .field — в сетке карточки лишний отступ не нужен */
+.route .field { margin-bottom: 0; }
 .route input::placeholder { color: #66718A; }   /* 4.89:1 на белом поле */
 .route__chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .25rem; }
 .chip {

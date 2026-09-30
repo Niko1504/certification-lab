@@ -44,21 +44,31 @@
           <a class="btn btn--primary" href="#lead" data-magnet>Проверить товар</a>
           <a class="btn btn--ghost" href="#lead">Задать вопрос</a>
         </div>
-        <p class="hero__trust">Юлия, специалист с опытом более 10 лет, ведёт заявку лично. ООО «МОСКОНТРАКТ», Москва и вся Россия, работаем по договору.</p>
+        <p class="hero__trust">Специалист с опытом более 10 лет ведёт заявку лично. ООО «МОСКОНТРАКТ», Москва и вся Россия, работаем по договору.</p>
       </div>
 
       <div class="route">
         <h2>Маршрут товара</h2>
-        <p>Пришлите ссылку на карточку или опишите товар словами. Ответим, какой документ нужен и что для него потребуется.</p>
-        <form action="#lead" method="get">
-          <label class="sr-only" for="route-url">Ссылка на товар</label>
-          <input id="route-url" type="text" name="item" placeholder="Ссылка на товар или название" autocomplete="off">
-          <div class="route__chips">
-            <button class="chip" type="button" data-example="Детская одежда, трикотаж, второй слой">Детская одежда</button>
-            <button class="chip" type="button" data-example="Кухонный комбайн, 220 В, для дома">Бытовая техника</button>
-            <button class="chip" type="button" data-example="Крем для лица, серийный выпуск, Россия">Косметика</button>
+        <p>Оставьте телефон и наименование продукции — ответим, какой документ нужен и что для него потребуется.</p>
+        <!-- Поля те же, что в форме заявки ниже (образец заказчика): телефон,
+             E-mail, наименование продукции. Отправка на странице одна — форма с
+             согласием стоит ниже, чтобы не просить согласие дважды. -->
+        <form data-lead-handoff="#lead form[data-lead-form]" novalidate>
+          <div class="field">
+            <label class="sr-only" for="d-phone-hero">Телефон</label>
+            <input id="d-phone-hero" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-mask="tel" required>
           </div>
-          <button class="btn btn--primary" type="submit">Начать проверку</button>
+          <div class="field">
+            <label class="sr-only" for="d-email-hero">E-mail</label>
+            <input id="d-email-hero" name="email" type="email" autocomplete="email" placeholder="E-mail">
+          </div>
+          <div class="field">
+            <label class="sr-only" for="d-item-hero">Наименование продукции</label>
+            <input id="d-item-hero" name="item" type="text" placeholder="Наименование продукции" required>
+          </div>
+          <button class="btn btn--primary" type="submit">Отправить</button>
+          <p class="form-note">Свяжемся за 15 минут в рабочее время · без обязательств</p>
+          <span data-status role="status" aria-live="polite"></span>
         </form>
         <p class="route__hint"><b>Не знаете, какой документ нужен?</b> Так и напишите: определение вида документа входит в работу.</p>
       </div>
@@ -257,7 +267,7 @@
   <div class="wrap foot__grid">
     <div>
       <p><b>МОСКОНТРАКТ</b>, центр сертификации. Москва, работаем дистанционно по всей России.</p>
-      <p>Специалист Юлия ведёт заявку от первого вопроса до готового документа.</p>
+      <p>Специалист ведёт заявку от первого вопроса до готового документа.</p>
     </div>
     <div>
       <p>Телефон <a href="tel:+79856689000">+7 985 668-90-00</a></p>

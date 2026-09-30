@@ -57,13 +57,5 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches &&
   document.querySelectorAll('[data-magnet]').forEach((el) => magnet(el));
 }
 
-/* Примеры товаров: заполняют поле маршрута, чтобы посетитель увидел, какой
-   уровень детализации от него ждут. */
-const routeInput = document.querySelector('#route-url');
-document.querySelectorAll('[data-example]').forEach((chip) => {
-  chip.addEventListener('click', () => {
-    if (!routeInput) return;
-    routeInput.value = chip.dataset.example;
-    routeInput.focus();
-  });
-});
+/* Примеры товаров из старой карточки маршрута убраны: поля там теперь те же,
+   что в форме заявки (телефон, E-mail, наименование продукции). */
