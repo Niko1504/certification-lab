@@ -6,7 +6,7 @@
    Бюджет: около 1 KB своего кода, без библиотек. Без JS этапы просто видны
    статично: скрытые состояния живут только под классом scene--live. */
 
-import { progress } from '../../assets/base.js';
+import { progress } from '../assets/base.js';
 
 const scene = document.querySelector('[data-scene]');
 const params = new URLSearchParams(location.search);
