@@ -379,9 +379,9 @@ section { padding: var(--s5) 0; }
 .svc-card h3 { font-size: var(--s2); margin: 0; }
 .svc-card h3 a { text-decoration: none; }
 .svc-card h3 a:hover { color: var(--accent); }
-.svc-card__short { color: var(--muted); font-size: var(--s1); margin: 0; }
-.svc-sub { display: grid; gap: .35rem; font-size: var(--s1); }
-.svc-sub a { color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; }
+.svc-card__short { color: var(--muted); font-size: .9375rem; line-height: 1.5; margin: 0; }
+.svc-sub { display: grid; gap: .45rem; font-size: .9375rem; }
+.svc-sub a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: .1rem; line-height: 1.4; }
 .svc-sub a:hover { color: var(--ink); border-bottom-color: var(--line); }
 .svc-card .btn { margin-top: .35rem; }
 .svc-more { display: flex; justify-content: center; margin-top: var(--s3); }
@@ -400,12 +400,19 @@ section { padding: var(--s5) 0; }
 .svc-faq h2 { font-size: var(--s2); margin-bottom: var(--s2); }
 .svc-other { padding: var(--s3) 0 var(--s4); }
 .svc-other h2 { font-size: var(--s2); margin-bottom: var(--s2); }
-.svc-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem 1.5rem; font-size: var(--s1); }
-@media (max-width: 640px) { .svc-list { grid-template-columns: 1fr; } }
-.svc-list a { text-decoration: none; border-bottom: 1px solid var(--line); }
+.svc-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s2) var(--s3); font-size: 1rem; }
+@media (max-width: 700px) { .svc-list { grid-template-columns: 1fr; } }
+.svc-list a { text-decoration: none; font-size: 1rem; font-weight: 600; line-height: 1.35; border-bottom: 1px solid var(--line); }
 .svc-list a:hover { border-bottom-color: var(--accent); }
+/* Полный список: название строкой, подпись под ним — перечень читается глазами,
+   а не как сплошное полотно мелкого текста. */
+.svc-list--full li { display: grid; gap: .3rem; align-content: start; padding-top: .9rem; border-top: 1px solid var(--line); }
+.svc-list--full a { border-bottom: 0; }
+.svc-list--full a:hover { border-bottom: 1px solid var(--accent); }
+.svc-list--full .svc-desc { display: block; font-size: .9375rem; line-height: 1.5; }
 .svc-groups { display: grid; gap: var(--s4); margin-top: var(--s3); }
-.svc-group h2 { font-size: var(--s3); margin-bottom: .35rem; }
+.svc-group h2 { font-size: var(--s3); margin-bottom: .3rem; }
+.svc-group > p.muted { font-size: 1rem; line-height: 1.5; margin: 0 0 var(--s2); max-width: 72ch; }
 .svc-group h2 a { text-decoration: none; }
 .svc-group h2 a:hover { color: var(--accent); }
 .crumbs { display: flex; flex-wrap: wrap; gap: .4rem; font-size: var(--s1); color: var(--muted); margin-bottom: var(--s2); }
