@@ -80,6 +80,32 @@ if (fine && !calm) {
   });
 }
 
+/* Маска телефона: поле с data-mask="tel" принимает только цифры и само
+   расставляет разделители — так номер приходит в заявку целиком, без
+   «плюс семь скобка» в разных написаниях. Восьмёрку в начале переводим в +7. */
+const telDigits = (value) => {
+  let d = value.replace(/\D/g, '');
+  if (d.startsWith('8')) d = '7' + d.slice(1);
+  if (d && !d.startsWith('7')) d = '7' + d;
+  return d.slice(0, 11);
+};
+const telFormat = (d) => {
+  if (!d) return '';
+  let out = '+7';
+  if (d.length > 1) out += ' (' + d.slice(1, 4);
+  if (d.length >= 5) out += ') ' + d.slice(4, 7);
+  if (d.length >= 8) out += '-' + d.slice(7, 9);
+  if (d.length >= 10) out += '-' + d.slice(9, 11);
+  return out;
+};
+document.querySelectorAll('[data-mask="tel"]').forEach((input) => {
+  input.addEventListener('input', () => { input.value = telFormat(telDigits(input.value)); });
+  input.addEventListener('blur', () => {
+    if (input.value && input.value.replace(/\D/g, '').length < 11) return;
+    input.value = telFormat(telDigits(input.value));
+  });
+});
+
 /* Форма: сначала пробуем отправить на настроенный адрес, при неудаче честно
    показываем запасной путь — заявку можно скопировать и отправить вручную. */
 document.querySelectorAll('[data-lead-form]').forEach((form) => {
@@ -89,18 +115,30 @@ document.querySelectorAll('[data-lead-form]').forEach((form) => {
 
   const compose = () => {
     const d = new FormData(form);
-    return [
-      'Заявка с сайта центра сертификации',
-      'Имя: ' + (d.get('name') || ''),
-      'Связь: ' + (d.get('contact') || ''),
-      'Товар: ' + (d.get('item') || ''),
-      'Политика: ' + location.pathname,
-    ].join('\n');
+    const names = {
+      phone: 'Телефон', email: 'E-mail', name: 'Имя', contact: 'Связь',
+      item: 'Продукция', product: 'Продукция', comment: 'Комментарий',
+    };
+    const lines = ['Заявка с сайта центра сертификации'];
+    d.forEach((value, key) => {
+      if (key === 'consent') return;
+      const text = String(value).trim();
+      if (!text) return;
+      lines.push((names[key] || key) + ': ' + text);
+    });
+    lines.push('Политика: ' + location.pathname);
+    return lines.join('\n');
   };
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const endpoint = form.dataset.leadForm;
+    const tel = form.querySelector('[data-mask="tel"]');
+    if (tel && tel.value && tel.value.replace(/\D/g, '').length < 11) {
+      status.textContent = 'Проверьте телефон: нужен номер целиком, 11 цифр.';
+      tel.focus();
+      return;
+    }
     status.textContent = 'Отправляем…';
     if (endpoint) {
       try {

@@ -1,27 +1,30 @@
-/* Вариант A. Система этого направления: тёмный «протокол», глубокий синий фон
-   рекламной карточки, жёлтый акцент, мягкий радиус, плакатная типографика.
+/* Вариант D. Светлая версия варианта A: та же геометрия, типографика и
+   механики, другая палитра — «протокол» на бумаге.
 
-   Фон и акцент — фиксированный бренд (карточка Avito). Светлота акцента не
-   назначена: жёлтый #FFC93C измерен против фона — 10.91:1 как текст на фоне и
-   11.31:1 под тёмной надписью, поэтому плашка идёт с чернильной надписью
-   (белое на жёлтый не проходит 5.3 и перевёрнуто в тёмное, как и требует правило).
-   Токены: tools/solve_accent.py, разбор в public/a/README.md */
+   Бренд тот же (карточка Avito): глубокий синий и жёлтый. Светлота акцента —
+   снова выход, а не вход, и на светлом фоне акцент раздваивается, потому что
+   жёлтый #FFC93C как текст на белом даёт 1.54:1 и не проходит:
+     · --accent       #FFC93C — плашка, надпись тёмная: 11.31:1
+     · --accent-text  #6C5900 — акцент как текст на белом: 6.85:1
+   Чернила #0F1D38 на белом 16.76:1, приглушённый текст #55627A 6.15:1.
+   Измерено tools/solve_accent.py (см. tools/measure_light_theme.py). */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --ground: #0F1D38;
-  --ground-deep: #0A1730;
-  --surface: #16264A;
-  --surface-2: #1B2C52;
-  --line: #24365A;
-  --ink: #FFFFFF;          /* 16.76:1 на фоне */
-  --muted: #AEBDD6;        /* 8.82:1 на фоне */
-  --accent: #FFC93C;       /* 10.91:1 на фоне, 11.31:1 под тёмной надписью */
+  --ground: #FFFFFF;
+  --ground-deep: #EEF1F7;
+  --surface: #F7F9FC;
+  --surface-2: #FFFFFF;
+  --line: #DCE1EA;
+  --ink: #0F1D38;          /* 16.76:1 на белом */
+  --muted: #55627A;        /* 6.15:1 на белом */
+  --accent: #FFC93C;       /* плашка, надпись тёмная: 11.31:1 */
+  --accent-text: #6C5900; /* акцент как текст на белом: 6.85:1 */
   --accent-ink: #101A2E;
-  --focus: var(--accent);  /* обводка фокуса: на светлом фоне берётся тёмный вариант */
-  --accent-soft: rgba(255, 201, 60, .14);
-  --danger: #FF8A80;       /* 6.4:1 на фоне — состояние ошибки, не акцент */
+  --focus: #6C5900;        /* обводка фокуса: жёлтая на белом не видна, 6.85:1 */
+  --accent-soft: rgba(255, 201, 60, .28);
+  --danger: #B3261E;       /* 6.1:1 на белом — состояние ошибки, не акцент */
 
   /* Три роли, три семейства: плакатный гротеск / нейтральный текстовый /
      моно для цифр. Все три проверены на кириллицу, самохост из assets/fonts. */
@@ -54,7 +57,7 @@ body {
   line-height: 1.6;
   color: var(--ink);
   background:
-    radial-gradient(1200px 620px at 88% -8%, rgba(255, 201, 60, .09), transparent 62%),
+    radial-gradient(1200px 620px at 88% -8%, rgba(255, 201, 60, .30), transparent 62%),
     linear-gradient(168deg, var(--ground) 0%, var(--ground-deep) 100%);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
@@ -98,10 +101,10 @@ a { color: inherit; }
   transition: translate .35s cubic-bezier(.16, 1, .3, 1), background .25s, color .25s, border-color .25s;
 }
 .btn--primary { background: var(--accent); color: var(--accent-ink); }
-.btn--primary:hover { background: #ffd466; }
-.btn--ghost { border: 1px solid #3B5382; color: var(--ink); }
-.btn--ghost:hover { border-color: var(--muted); background: rgba(255, 255, 255, .04); }
-.btn--quiet { color: var(--accent); padding-inline: 0; min-height: 44px; }
+.btn--primary:hover { background: #F5B91F; }
+.btn--ghost { border: 1px solid rgba(15, 29, 56, .24); color: var(--ink); }
+.btn--ghost:hover { border-color: var(--muted); background: rgba(15, 29, 56, .05); }
+.btn--quiet { color: var(--accent-text); padding-inline: 0; min-height: 44px; }
 .btn--quiet:hover { translate: 0 -1px; }
 
 /* ── Шапка: одна строка, ниже 80px ─────────────────────────────────────── */
@@ -110,7 +113,7 @@ a { color: inherit; }
   top: 0;
   z-index: 20;
   backdrop-filter: blur(14px);
-  background: rgba(15, 29, 56, .78);
+  background: rgba(255, 255, 255, .86);
   border-bottom: 1px solid var(--line);
 }
 .top__in {
@@ -167,8 +170,9 @@ a { color: inherit; }
 /* Плашка маршрута: единственный компонент во первом экране */
 .route {
   border: 1px solid var(--line);
+  box-shadow: 0 22px 50px -34px rgba(15, 29, 56, .45);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--surface) 0%, rgba(22, 38, 74, .72) 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(247, 249, 252, .92) 100%);
   padding: var(--s3);
 }
 .route h2 { font-size: var(--s2); margin-bottom: .35rem; }
@@ -181,10 +185,10 @@ a { color: inherit; }
   padding: .75rem 1rem;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: rgba(10, 23, 48, .72);
+  background: #FFFFFF;
   color: var(--ink);
 }
-.route input::placeholder { color: #9AACC9; }
+.route input::placeholder { color: #66718A; }   /* 4.89:1 на белом поле */
 .route__chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .25rem; }
 .chip {
   border: 1px solid var(--line);
@@ -192,11 +196,11 @@ a { color: inherit; }
   padding: .4rem .85rem;
   font-size: var(--s1);
   color: var(--muted);
-  background: rgba(255, 255, 255, .03);
+  background: rgba(15, 29, 56, .04);
 }
 .chip:hover { color: var(--ink); border-color: var(--muted); }
 .route__hint { font-size: var(--s1); color: var(--muted); display: flex; gap: .5rem; }
-.route__hint b { color: var(--accent); font-weight: 500; }
+.route__hint b { color: var(--accent-text); font-weight: 500; }
 
 /* ── Секции ────────────────────────────────────────────────────────────── */
 section { padding: var(--s5) 0; }
@@ -209,11 +213,12 @@ section { padding: var(--s5) 0; }
 /* 2. Три шага + заметка о том, что ускоряет работу */
 .start-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: var(--s4); align-items: start; }
 @media (max-width: 900px) { .start-grid { grid-template-columns: 1fr; } }
-.start-note { border: 1px solid var(--line); border-radius: var(--radius-lg); background: rgba(22, 38, 74, .5); padding: var(--s3); }
+.start-note { border: 1px solid var(--line); border-radius: var(--radius-lg); background: #FFFFFF; padding: var(--s3);
+  box-shadow: 0 18px 40px -30px rgba(15, 29, 56, .45); }
 .start-note h3 { margin-bottom: .75rem; }
 .start-note ul { margin: 0; padding: 0; display: grid; gap: .6rem; }
 .start-note li { list-style: none; color: var(--muted); font-size: 1rem; display: flex; gap: .6rem; }
-.start-note li::before { content: "•"; color: var(--accent); }
+.start-note li::before { content: "•"; color: var(--accent-text); }
 .steps { display: grid; gap: var(--s2); }
 .steps li {
   list-style: none;
@@ -223,7 +228,7 @@ section { padding: var(--s5) 0; }
   grid-template-columns: 8rem minmax(0, 1fr);
   gap: var(--s3);
 }
-.steps .n { font-family: var(--font-mono); color: var(--accent); font-size: var(--s1); }
+.steps .n { font-family: var(--font-mono); color: var(--accent-text); font-size: var(--s1); }
 .steps h3 { margin-bottom: .35rem; }
 .steps p { color: var(--muted); max-width: 54ch; }
 @media (max-width: 720px) { .steps li { grid-template-columns: 1fr; gap: .35rem; } }
@@ -233,7 +238,7 @@ section { padding: var(--s5) 0; }
 .docs article { background: var(--ground); padding: var(--s3); display: grid; gap: .65rem; align-content: start; }
 .docs h3 { color: var(--ink); }
 .docs p { color: var(--muted); font-size: var(--s1); }
-.docs .tag { font-family: var(--font-mono); font-size: .875rem; color: var(--accent); letter-spacing: .02em; }
+.docs .tag { font-family: var(--font-mono); font-size: .875rem; color: var(--accent-text); letter-spacing: .02em; }
 @media (max-width: 980px) { .docs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .docs { grid-template-columns: 1fr; } }
 
@@ -284,14 +289,14 @@ section { padding: var(--s5) 0; }
 .price article:nth-child(3) { margin-top: calc(var(--s4) * -1); }
 .price article { border-top: 1px solid var(--line); padding-top: var(--s2); }
 .price p { color: var(--muted); font-size: var(--s1); margin-top: .4rem; }
-.price__anchor { font-family: var(--font-display); font-size: var(--s3); color: var(--accent); }
+.price__anchor { font-family: var(--font-display); font-size: var(--s3); color: var(--accent-text); }
 @media (max-width: 760px) {
   .price { grid-template-columns: 1fr; }
   .price article:nth-child(2), .price article:nth-child(3) { margin-top: 0; }
 }
 
 /* 7. Реестр — одно утверждение на всю секцию */
-.quote { border-block: 1px solid var(--line); background: rgba(10, 23, 48, .55); }
+.quote { border-block: 1px solid var(--line); background: var(--surface); }
 .quote blockquote {
   margin: 0;
   font-family: var(--font-display);
@@ -302,7 +307,7 @@ section { padding: var(--s5) 0; }
 }
 .quote ul { margin: var(--s3) 0 0; padding: 0; display: grid; gap: .5rem; }
 .quote li { list-style: none; color: var(--muted); font-size: var(--s1); display: flex; gap: .6rem; }
-.quote li::before { content: "•"; color: var(--accent); }
+.quote li::before { content: "•"; color: var(--accent-text); }
 .quote__grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: var(--s4); align-items: end; }
 @media (max-width: 880px) { .quote__grid { grid-template-columns: 1fr; } }
 
@@ -320,7 +325,7 @@ section { padding: var(--s5) 0; }
   gap: var(--s2);
 }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; color: var(--accent); font-family: var(--font-mono); font-size: 1.25rem; line-height: 1; }
+.faq summary::after { content: "+"; color: var(--accent-text); font-family: var(--font-mono); font-size: 1.25rem; line-height: 1; }
 .faq details[open] summary::after { content: "–"; }
 .faq p { color: var(--muted); padding-bottom: var(--s2); max-width: 68ch; }
 
@@ -332,7 +337,8 @@ section { padding: var(--s5) 0; }
   align-items: start;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--surface-2), rgba(22, 38, 74, .55));
+  background: linear-gradient(180deg, #FFFFFF, var(--surface));
+  box-shadow: 0 22px 50px -34px rgba(15, 29, 56, .45);
   padding: clamp(1.25rem, 4vw, 2.5rem);
 }
 @media (max-width: 880px) { .lead-panel { grid-template-columns: 1fr; } }
@@ -354,7 +360,7 @@ form input, form textarea {
   padding: .75rem 1rem;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: rgba(10, 23, 48, .75);
+  background: #FFFFFF;
   color: var(--ink);
 }
 form textarea { min-height: 96px; }
@@ -371,7 +377,7 @@ details summary:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
-[data-status] { font-size: var(--s1); color: var(--accent); min-height: 1.2em; display: block; margin-top: .6rem; }
+[data-status] { font-size: var(--s1); color: var(--accent-text); min-height: 1.2em; display: block; margin-top: .6rem; }
 [data-fallback] { margin-top: var(--s2); }
 [data-fallback] textarea { font-family: var(--font-mono); font-size: .8125rem; }
 
@@ -394,7 +400,7 @@ details summary:focus-visible {
     align-items: center;
     justify-content: center;
     min-height: 52px;
-    background: var(--ground-deep);
+    background: #FFFFFF;
     color: var(--ink);
     text-decoration: none;
     font-family: var(--font-display);
@@ -408,6 +414,6 @@ details summary:focus-visible {
 .foot { border-top: 1px solid var(--line); padding: var(--s4) 0; color: var(--muted); font-size: var(--s1); }
 .foot__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); }
 .foot a { color: var(--ink); text-decoration: none; }
-.foot a:hover { color: var(--accent); }
+.foot a:hover { color: var(--accent-text); }
 .foot__legal { margin-top: var(--s3); display: grid; gap: .35rem; }
 @media (max-width: 760px) { .foot__grid { grid-template-columns: 1fr; } }
