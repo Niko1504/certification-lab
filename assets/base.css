@@ -80,3 +80,13 @@ html.js .reveal-scale.vis { opacity: 1; translate: 0 0; scale: 1; }
   letter-spacing: .08em;
   text-transform: uppercase;
 }
+
+/* Контакты в шапке: строка над меню. Адрес, телефон, почта и Telegram видны
+   на широком экране; на телефоне адрес и почта скрываются — они есть в подвале. */
+.contacts { border-bottom: 1px solid var(--line); font-size: .9375rem; color: var(--muted); }
+.contacts__in { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem 1.25rem; padding: .5rem 0; }
+.contacts__addr { margin-right: auto; }
+.contacts a { color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; }
+.contacts a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+@media (max-width: 820px) { .contacts__addr, .contacts__mail { display: none; } }
+@media (max-width: 400px) { .contacts { font-size: .875rem; } }
