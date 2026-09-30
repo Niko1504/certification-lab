@@ -20,6 +20,7 @@
   --accent: #FFC93C;       /* 10.91:1 на фоне, 11.31:1 под тёмной надписью */
   --accent-ink: #101A2E;
   --focus: var(--accent);  /* обводка фокуса: на светлом фоне берётся тёмный вариант */
+  --field: rgba(10, 23, 48, .72); /* фон полей формы */
   --accent-soft: rgba(255, 201, 60, .14);
   --danger: #FF8A80;       /* 6.4:1 на фоне — состояние ошибки, не акцент */
 
@@ -183,7 +184,7 @@ a { color: inherit; }
   padding: .75rem 1rem;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: rgba(10, 23, 48, .72);
+  background: var(--field);
   color: var(--ink);
 }
 /* Поля карточки идут через общий .field — в сетке карточки лишний отступ не нужен */
@@ -201,6 +202,23 @@ a { color: inherit; }
 .chip:hover { color: var(--ink); border-color: var(--muted); }
 .route__hint { font-size: var(--s1); color: var(--muted); display: flex; gap: .5rem; }
 .route__hint b { color: var(--accent); font-weight: 500; }
+
+/* Форма заявки в карточке первого экрана: заголовок, поля, согласие, кнопка во
+   всю ширину, подпись под кнопкой и запасной путь «скопировать заявку». */
+.route--form h2 { font-size: clamp(1.15rem, 1.9vw, 1.5rem); margin-bottom: .5rem; }
+.route--form .btn { width: 100%; }
+.route--form .check { margin: .15rem 0 0; }
+.route--form textarea {
+  width: 100%;
+  min-height: 96px;
+  padding: .75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--field);
+  color: var(--ink);
+  font: inherit;
+  resize: vertical;
+}
 
 /* ── Секции ────────────────────────────────────────────────────────────── */
 section { padding: var(--s5) 0; }
@@ -345,6 +363,8 @@ section { padding: var(--s5) 0; }
 /* Форма заявки — одной колонкой, по образцу заказчика: заголовок, три поля,
    согласие, кнопка во всю ширину, строка под кнопкой. */
 .lead-panel--form { grid-template-columns: 1fr; max-width: 42rem; margin-inline: auto; }
+.lead-panel--cta { grid-template-columns: 1fr; max-width: 46rem; margin-inline: auto; }
+.lead-panel__actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: var(--s2); }
 .lead-panel--form h2 { font-size: clamp(1.3rem, 2.6vw, 1.9rem); max-width: 32ch; }
 .lead-panel--form form { margin-top: var(--s2); }
 .lead-panel--form .btn { width: 100%; }

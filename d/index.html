@@ -47,31 +47,38 @@
         <p class="hero__trust">Специалист с опытом более 10 лет ведёт заявку лично. ООО «МОСКОНТРАКТ», Москва и вся Россия, работаем по договору.</p>
       </div>
 
-      <div class="route">
-        <h2>Маршрут товара</h2>
-        <p>Оставьте телефон и наименование продукции — ответим, какой документ нужен и что для него потребуется.</p>
-        <!-- Поля те же, что в форме заявки ниже (образец заказчика): телефон,
-             E-mail, наименование продукции. Отправка на странице одна — форма с
-             согласием стоит ниже, чтобы не просить согласие дважды. -->
-        <form data-lead-handoff="#lead form[data-lead-form]" novalidate>
+      <!-- Форма заявки стоит на первом экране и отправляется целиком, в один шаг:
+           заголовок, телефон, E-mail, наименование продукции, согласие со ссылкой
+           на политику, кнопка и строка под кнопкой. Поле «Наименование продукции»
+           сохраняет вход через товар, а не через документ. Форма на странице одна —
+           значит одно согласие и одно нажатие «Отправить». -->
+      <aside class="route route--form reveal" id="lead">
+        <h2>Бесплатная консультация по сертификации вашей продукции</h2>
+        <form data-lead-form="" novalidate>
           <div class="field">
-            <label class="sr-only" for="d-phone-hero">Телефон</label>
-            <input id="d-phone-hero" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-mask="tel" required>
+            <label class="sr-only" for="d-phone">Телефон</label>
+            <input id="d-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-mask="tel" required>
           </div>
           <div class="field">
-            <label class="sr-only" for="d-email-hero">E-mail</label>
-            <input id="d-email-hero" name="email" type="email" autocomplete="email" placeholder="E-mail">
+            <label class="sr-only" for="d-email">E-mail</label>
+            <input id="d-email" name="email" type="email" autocomplete="email" placeholder="E-mail">
           </div>
           <div class="field">
-            <label class="sr-only" for="d-item-hero">Наименование продукции</label>
-            <input id="d-item-hero" name="item" type="text" placeholder="Наименование продукции" required>
+            <label class="sr-only" for="d-item">Наименование продукции</label>
+            <input id="d-item" name="item" type="text" autocomplete="off" placeholder="Наименование продукции">
           </div>
+          <label class="check"><input type="checkbox" name="consent" value="yes" required> Даю согласие на обработку персональных данных и соглашаюсь с <a href="../legal/privacy.html">политикой конфиденциальности</a></label>
           <button class="btn btn--primary" type="submit">Отправить</button>
-          <p class="form-note">Свяжемся за 15 минут в рабочее время · без обязательств</p>
           <span data-status role="status" aria-live="polite"></span>
+          <p class="form-note">Свяжемся за 15 минут в рабочее время · без обязательств</p>
+        <div data-fallback hidden>
+          <p class="muted">Скопируйте текст и отправьте его в удобный канал: телефон <a href="tel:+79856689000">+7 985 668-90-00</a>, Telegram <a href="https://t.me/nikolay_hml">@nikolay_hml</a> или MAX.</p>
+          <label class="sr-only" for="d-out">Текст заявки</label>
+          <textarea id="d-out" data-fallback-text readonly></textarea>
+          <button class="btn btn--ghost" type="button" data-copy>Скопировать заявку</button>
+        </div>
         </form>
-        <p class="route__hint"><b>Не знаете, какой документ нужен?</b> Так и напишите: определение вида документа входит в работу.</p>
-      </div>
+      </aside>
     </div>
   </section>
 
@@ -226,37 +233,17 @@
     </div>
   </section>
 
-  <!-- 9. Заявка (светлый вариант). Форма собрана по образцу заказчика: заголовок, три поля,
-       согласие со ссылкой на политику, кнопка и строка под кнопкой.
-       Политика и согласие стоят до кнопки — это условие приёма формы. -->
-  <section id="lead">
+  <!-- 9. Вход к заявке. Форма стоит на первом экране — здесь короткий путь к
+       ней, чтобы на странице не было двух одинаковых форм. -->
+  <section id="cta">
     <div class="wrap">
-      <div class="lead-panel lead-panel--form reveal">
-        <h2>Срочная бесплатная консультация по сертификации вашей продукции</h2>
-        <form data-lead-form="" novalidate>
-          <div class="field">
-            <label class="sr-only" for="d-phone">Телефон</label>
-            <input id="d-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-mask="tel" required>
-          </div>
-          <div class="field">
-            <label class="sr-only" for="d-email">E-mail</label>
-            <input id="d-email" name="email" type="email" autocomplete="email" placeholder="E-mail">
-          </div>
-          <div class="field">
-            <label class="sr-only" for="d-item">Наименование продукции</label>
-            <input id="d-item" name="item" type="text" placeholder="Наименование продукции" required>
-          </div>
-          <label class="check"><input type="checkbox" name="consent" value="yes" required> Нажимая на кнопку, вы даёте согласие на обработку персональных данных и соглашаетесь с <a href="../legal/privacy.html">политикой конфиденциальности</a></label>
-          <button class="btn btn--primary" type="submit">Отправить</button>
-          <p class="form-note">Свяжемся за 15 минут в рабочее время · без обязательств</p>
-          <span data-status role="status" aria-live="polite"></span>
-          <div data-fallback hidden>
-            <p class="muted">Скопируйте текст и отправьте его в удобный канал: телефон <a href="tel:+79856689000">+7 985 668-90-00</a>, Telegram <a href="https://t.me/nikolay_hml">@nikolay_hml</a> или MAX.</p>
-            <label class="sr-only" for="d-out">Текст заявки</label>
-            <textarea id="d-out" data-fallback-text readonly></textarea>
-            <button class="btn btn--ghost" type="button" data-copy>Скопировать заявку</button>
-          </div>
-        </form>
+      <div class="lead-panel lead-panel--cta reveal">
+        <h2>Остались вопросы по вашему товару?</h2>
+        <p class="lead">Напишите или позвоните: ответим, какой документ нужен и что для него потребуется. Работаем по договору — состав работ и стоимость фиксируем до начала.</p>
+        <div class="lead-panel__actions">
+          <a class="btn btn--primary" href="#lead" data-magnet>Оставить заявку</a>
+          <a class="btn btn--ghost" href="tel:+79856689000">Позвонить</a>
+        </div>
       </div>
     </div>
   </section>
