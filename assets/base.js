@@ -118,6 +118,7 @@ document.querySelectorAll('[data-lead-form]').forEach((form) => {
     const names = {
       phone: 'Телефон', email: 'E-mail', name: 'Имя', contact: 'Связь',
       item: 'Продукция', product: 'Продукция', comment: 'Комментарий',
+      service: 'Услуга',
     };
     const lines = ['Заявка с сайта центра сертификации'];
     d.forEach((value, key) => {

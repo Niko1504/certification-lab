@@ -22,6 +22,7 @@
   <div class="wrap top__in">
     <a class="brand" href="#top"><b>МОСКОНТРАКТ</b><span>центр сертификации</span></a>
     <nav>
+      <a href="#services">Услуги</a>
       <a href="#docs">Документы</a>
       <a href="#who">Кому</a>
       <a href="#process">Как работаем</a>
@@ -144,6 +145,83 @@
           <h3>Свидетельство о госрегистрации</h3>
           <p>Для товаров, которые проверяет Роспотребнадзор: бытовая химия, косметика, пищевая продукция, товары для детей.</p>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3a. Популярные услуги. Навигация по направлениям: заголовок карточки ведёт
+       на страницу направления, пункты — на страницы услуг, кнопка «Заказать» —
+       к форме заявки на первом экране. Карточки заполняет tools/build_services.py
+       из content/services.json. -->
+  <section id="services">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <h2>Популярные услуги</h2>
+        <p>Оформляем обязательные документы по техническим регламентам ЕАЭС, добровольные сертификаты, пожарные документы и системы менеджмента. Выберите направление: внутри видно, какие документы сюда входят, что понадобится от вас и как идёт работа.</p>
+      </div>
+      <div class="svc-grid">
+        <!-- services:start -->
+        <article class="svc-card reveal">
+          <h3><a href="./services/group/obyazatelnaya-sertifikaciya/">Обязательная сертификация</a></h3>
+          <p class="svc-card__short">Декларации и сертификаты по техническим регламентам ЕАЭС, отказные письма, свидетельства о государственной регистрации.</p>
+          <div class="svc-sub">
+            <a href="./services/deklaraciya-sootvetstviya-tr-ts/">Декларация соответствия ТР ТС</a>
+            <a href="./services/sertifikat-sootvetstviya-tr-ts/">Сертификат соответствия ТР ТС</a>
+            <a href="./services/otkaznoe-pismo/">Отказное письмо</a>
+          </div>
+          <a class="btn btn--quiet" href="#lead">Заказать</a>
+        </article>
+        <article class="svc-card reveal">
+          <h3><a href="./services/group/dobrovolnaya-sertifikaciya/">Добровольная сертификация</a></h3>
+          <p class="svc-card__short">Сертификаты и декларации ГОСТ Р, когда обязательной оценки для товара нет или нужен дополнительный аргумент для покупателя.</p>
+          <div class="svc-sub">
+            <a href="./services/dobrovolnyy-sertifikat-gost-r/">Добровольный сертификат ГОСТ Р</a>
+            <a href="./services/dobrovolnaya-deklaraciya-gost-r/">Добровольная декларация ГОСТ Р</a>
+          </div>
+          <a class="btn btn--quiet" href="#lead">Заказать</a>
+        </article>
+        <article class="svc-card reveal">
+          <h3><a href="./services/group/pozharnaya-sertifikaciya/">Пожарная сертификация</a></h3>
+          <p class="svc-card__short">Документы по техническому регламенту о требованиях пожарной безопасности: материалы, кабели, оборудование.</p>
+          <div class="svc-sub">
+            <a href="./services/sertifikat-pozharnoy-bezopasnosti/">Сертификат пожарной безопасности</a>
+            <a href="./services/deklaraciya-pozharnoy-bezopasnosti/">Декларация пожарной безопасности</a>
+          </div>
+          <a class="btn btn--quiet" href="#lead">Заказать</a>
+        </article>
+        <article class="svc-card reveal">
+          <h3><a href="./services/group/iso-smk/">ISO и системы менеджмента</a></h3>
+          <p class="svc-card__short">Сертификаты систем менеджмента: качество, экология, охрана труда, пищевая безопасность.</p>
+          <div class="svc-sub">
+            <a href="./services/iso-9001/">ISO 9001 — система менеджмента качества</a>
+            <a href="./services/iso-14001/">ISO 14001 — экологический менеджмент</a>
+            <a href="./services/iso-45001/">ISO 45001 — охрана труда</a>
+          </div>
+          <a class="btn btn--quiet" href="#lead">Заказать</a>
+        </article>
+        <article class="svc-card reveal">
+          <h3><a href="./services/group/marketpleysy/">Для продавцов на маркетплейсах</a></h3>
+          <p class="svc-card__short">Комплект документов, который запрашивают Wildberries и Ozon при загрузке карточек и приёмке товара.</p>
+          <div class="svc-sub">
+            <a href="./services/dokumenty-dlya-wildberries/">Документы для продавцов на Wildberries</a>
+            <a href="./services/dokumenty-dlya-ozon/">Документы для продавцов на Ozon</a>
+          </div>
+          <a class="btn btn--quiet" href="#lead">Заказать</a>
+        </article>
+        <article class="svc-card reveal">
+          <h3><a href="./services/group/tovary/">По видам товаров</a></h3>
+          <p class="svc-card__short">Популярные категории: одежда, детские товары, косметика, техника, мебель, продукты, упаковка, стройматериалы.</p>
+          <div class="svc-sub">
+            <a href="./services/odezhda-i-obuv/">Одежда и обувь</a>
+            <a href="./services/detskie-tovary/">Детские товары и игрушки</a>
+            <a href="./services/kosmetika-i-bytovaya-himiya/">Косметика и бытовая химия</a>
+          </div>
+          <a class="btn btn--quiet" href="#lead">Заказать</a>
+        </article>
+        <!-- services:end -->
+      </div>
+      <div class="svc-more reveal">
+        <a class="btn btn--ghost" href="./services/">Смотреть все услуги</a>
       </div>
     </div>
   </section>
