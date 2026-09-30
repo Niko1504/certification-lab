@@ -1,0 +1,225 @@
+/* Вариант B. Система направления: светлая бумага, витрина документов, острые углы,
+   антиква в заголовках. Механика первого экрана: стопка карточек, которая
+   прилипает при скролле и накапливается. Целиком на CSS, без JS.
+
+   Акцент #007B36 выбран как выход системы: при светлом фоне порог 4.5:1 как текст
+   и 5.3:1 под белой надписью держится именно на этой светлоте (4.91:1 и 5.4:1),
+   выше неё белая надпись уже не проходит. Расчёт: tools/solve_accent.py, оттенок 150. */
+
+:root {
+  color-scheme: light;
+
+  --ground: #F6F4EE;
+  --surface: #FFFFFF;
+  --surface-2: #EFECE3;
+  --line: #DAD5C8;
+  --ink: #171D17;
+  --muted: #5F6A5F;        /* 5.14:1 на бумаге */
+  --accent: #007B36;       /* 4.91:1 на бумаге, белая надпись 5.4:1 */
+  --accent-soft: #E3F0E4;
+  --danger: #A32219;
+
+  --font-display: "Prata", Georgia, "Times New Roman", serif;
+  --font-body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "PT Mono", ui-monospace, Consolas, monospace;
+
+  --s1: .875rem;
+  --s2: 1.125rem;
+  --s3: 1.5rem;
+  --s4: 2.25rem;
+  --s5: 3.25rem;
+  --s6: 5rem;
+
+  --radius: 0;             /* характер: острый */
+  --radius-sm: 0;
+  --radius-lg: 0;
+
+  --wrap: 1120px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; line-height: 1.14; letter-spacing: 0; }
+h1 { font-size: clamp(2rem, 4.2vw, 3.25rem); }
+h2 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); }
+h3 { font-size: var(--s2); line-height: 1.3; }
+p { margin: 0; }
+a { color: inherit; }
+.wrap { width: min(100% - 2 * var(--gutter), var(--wrap)); margin-inline: auto; }
+.lead { color: var(--muted); max-width: 60ch; }
+.muted { color: var(--muted); }
+section { padding: var(--s5) 0; }
+.sec__head { margin-bottom: var(--s4); }
+.sec__head h2 { max-width: 26ch; }
+.sec__head p { margin-top: .85rem; color: var(--muted); max-width: 56ch; }
+
+/* Кнопки: прямоугольные, подчёркнутая вторичная — бумага и линейки, не капсулы */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 48px; padding: .75rem 1.4rem;
+  font-family: var(--font-body); font-size: 1rem; font-weight: 600;
+  text-decoration: none; border: 1px solid var(--accent); border-radius: var(--radius);
+  transition: background .2s, color .2s, border-color .2s;
+}
+.btn--primary { background: var(--accent); color: #fff; }
+.btn--primary:hover { background: #00652c; }
+.btn--line { border-color: var(--ink); background: transparent; color: var(--ink); }
+.btn--line:hover { background: var(--ink); color: var(--ground); }
+.btn--quiet { border: 0; padding-inline: 0; min-height: 44px; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Шапка: набор строк, разделитель-линейка */
+.top { border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--ground) 92%, white); position: sticky; top: 0; z-index: 20; }
+.top__in { display: flex; align-items: center; gap: var(--s3); min-height: 72px; }
+.brand { min-width: 0; overflow: hidden; white-space: nowrap; text-decoration: none; }
+.brand b { font-family: var(--font-display); font-size: 1.05rem; }
+.brand span { color: var(--muted); font-size: var(--s1); margin-left: .6rem; }
+.top nav { margin-left: auto; display: flex; gap: var(--s3); font-size: var(--s1); }
+.top nav a { color: var(--muted); text-decoration: none; }
+.top nav a:hover { color: var(--ink); }
+.top .btn { min-height: 42px; padding-block: .5rem; }
+@media (max-width: 900px) { .top nav { display: none; } }
+@media (max-width: 640px) {
+  .top__in { gap: var(--s2); }
+  .brand span { display: none; }
+  .top .btn { padding-inline: 1rem; font-size: .9375rem; }
+}
+
+/* 1. Первый экран: редакционная асимметрия, форма прямо в колонке */
+.hero { padding: clamp(2.5rem, 6vw, 4.5rem) 0 var(--s4); border-bottom: 1px solid var(--line); }
+.hero__grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.hero h1 { max-width: 24ch; }
+.hero .lead { margin-top: var(--s2); font-size: var(--s2); }
+.hero__facts { margin-top: var(--s3); display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; font-size: var(--s1); color: var(--muted); }
+.hero__facts span { display: flex; gap: .45rem; align-items: baseline; }
+.hero__facts span::before { content: "•"; color: var(--accent); }
+.hero__note { margin-top: var(--s3); border-left: 2px solid var(--ink); padding-left: 1rem; font-size: var(--s1); color: var(--muted); max-width: 42ch; }
+@media (max-width: 900px) { .hero__grid { grid-template-columns: 1fr; } }
+
+.strip { background: var(--surface); border: 1px solid var(--line); padding: var(--s3); }
+.strip form { display: grid; gap: .7rem; margin-top: var(--s2); }
+.strip input[type="text"] { width: 100%; min-height: 48px; padding: .7rem .9rem; border: 1px solid #B9B3A4; background: var(--ground); color: var(--ink); font: inherit; font-size: 1rem; }
+.strip input[type="text"]:focus { border-color: var(--accent); outline: 2px solid var(--accent-soft); outline-offset: 1px; }
+.strip input::placeholder { color: var(--muted); }
+.strip h2 { font-size: var(--s2); }
+.strip p { color: var(--muted); font-size: var(--s1); margin-top: .4rem; }
+.strip label { font-size: var(--s1); color: var(--muted); display: block; margin-top: .5rem; }
+.chips__caption { margin-top: .75rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.chip { display: inline-flex; align-items: center; min-height: 40px; background: var(--surface-2); border: 1px solid var(--line); padding: .45rem .9rem; font: inherit; font-size: 1rem; color: var(--ink); cursor: pointer; }
+.chip:hover { border-color: var(--ink); background: var(--ground); }
+.chip:hover { color: var(--ink); border-color: var(--ink); }
+
+/* Что приходит в ответ: закрывает низ карточки, чтобы правая колонка не пустовала */
+.strip__expect { list-style: none; margin: var(--s3) 0 0; padding: var(--s3) 0 0; border-top: 1px solid var(--line); display: grid; gap: .5rem; }
+.strip__expect li { font-size: var(--s1); color: var(--muted); display: flex; gap: .55rem; }
+.strip__expect li::before { content: "•"; color: var(--accent); }
+
+/* 2. Стопка документов: механика направления. Карточки прилипают и накапливаются */
+/* Обычный поток, не сетка: внутри сетки у элемента нет запаса хода и sticky
+   не работает, карточки не накапливаются. Отступ делаем полем снизу. */
+/* Запас хода снизу: без него карточкам негде накапливаться, и стопка
+   выглядит как обычный список. */
+.stack { display: block; padding-bottom: clamp(2rem, 26vh, 14rem); }
+.stack article {
+  margin-bottom: var(--s3);
+  position: sticky;
+  top: calc(84px + var(--i, 0) * 68px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: var(--s3);
+  display: grid;
+  gap: .6rem;
+  box-shadow: 0 -1px 0 var(--line), 0 18px 34px -22px rgba(23, 29, 23, .45);
+}
+.stack article:nth-child(1) { --i: 0; }
+.stack article:nth-child(2) { --i: 1; }
+.stack article:nth-child(3) { --i: 2; }
+.stack article:nth-child(4) { --i: 3; }
+.stack .tag { font-family: var(--font-mono); font-size: .875rem; color: var(--accent); letter-spacing: .02em; }
+.stack h3 { max-width: 30ch; }
+.stack p { color: var(--muted); max-width: 62ch; }
+.stack dl { margin: .25rem 0 0; display: grid; grid-template-columns: 12rem minmax(0, 1fr); gap: .35rem var(--s2); }
+.stack dt { font-family: var(--font-mono); font-size: .875rem; color: var(--muted); }
+.stack dd { margin: 0; }
+@media (max-width: 700px) { .stack dl { grid-template-columns: 1fr; gap: .2rem; } .stack article { top: calc(76px + var(--i, 0) * 40px); } }
+
+/* 3. Сценарии: строки-записи */
+.who div { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: var(--s3); padding: var(--s2) 0; border-top: 1px solid var(--line); }
+.who div:last-child { border-bottom: 1px solid var(--line); }
+.who h3 { font-size: var(--s2); }
+.who p { color: var(--muted); max-width: 64ch; }
+@media (max-width: 720px) { .who div { grid-template-columns: 1fr; gap: .35rem; } }
+
+/* 4. Процесс: узкая колонка с заметками на полях */
+.process { max-width: 62rem; }
+.process ol { margin: 0; padding: 0; counter-reset: p; }
+.process li { list-style: none; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: var(--s2); padding: .75rem 0; border-bottom: 1px solid var(--line); }
+.process li::before { counter-increment: p; content: counter(p) "."; font-family: var(--font-mono); color: var(--muted); }
+.process aside { margin-top: var(--s3); font-size: var(--s1); color: var(--muted); border-top: 2px solid var(--accent); padding-top: .75rem; }
+
+/* 5. Стоимость: сетка 2 на 2 */
+.price { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s3); }
+.price article { border: 1px solid var(--line); background: var(--surface); padding: var(--s3); }
+.price p { color: var(--muted); font-size: 1rem; margin-top: .4rem; }
+.price__anchor { font-family: var(--font-display); font-size: var(--s3); color: var(--accent); margin-top: .35rem; }
+@media (max-width: 760px) { .price { grid-template-columns: 1fr; } }
+
+/* 6. Реестр: полоса с одним утверждением */
+.band { background: var(--ink); color: var(--ground); }
+.band blockquote { margin: 0; font-family: var(--font-display); font-size: clamp(1.3rem, 2.3vw, 1.9rem); line-height: 1.2; max-width: 30ch; }
+.band__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4); align-items: end; }
+.band p, .band li { color: #D7DCD7; }
+.band ul { margin: var(--s2) 0 0; padding: 0; }
+.band li { list-style: none; font-size: var(--s1); display: flex; gap: .5rem; }
+.band li::before { content: "•"; color: var(--accent-soft); }
+@media (max-width: 880px) { .band__grid { grid-template-columns: 1fr; } }
+
+/* 7. Вопросы */
+.faq { max-width: 56rem; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; padding: var(--s2) 0; font-family: var(--font-display); font-size: var(--s2); list-style: none; display: flex; justify-content: space-between; gap: var(--s2); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-mono); color: var(--accent); font-size: 1.25rem; line-height: 1; }
+.faq details[open] summary::after { content: "–"; }
+.faq p { color: var(--muted); padding-bottom: var(--s2); max-width: 70ch; }
+
+/* 8. Заявка */
+.panel { background: var(--surface); border: 1px solid var(--line); padding: clamp(1.25rem, 4vw, 2.5rem); display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: var(--s4); align-items: start; }
+@media (max-width: 880px) { .panel { grid-template-columns: 1fr; } }
+.panel .lead { font-size: 1rem; }
+form .field { display: grid; gap: .3rem; margin-bottom: .85rem; }
+form label { font-size: var(--s1); color: var(--muted); }
+form input, form textarea { width: 100%; min-height: 48px; padding: .7rem .9rem; border: 1px solid var(--line); background: var(--ground); color: var(--ink); font: inherit; }
+form textarea { min-height: 92px; }
+.check { display: flex; gap: .55rem; align-items: flex-start; font-size: var(--s1); color: var(--muted); margin: .2rem 0 var(--s2); }
+.check input { width: 20px; height: 20px; min-height: 0; margin-top: .15rem; }
+[data-status] { display: block; margin-top: .6rem; font-size: var(--s1); color: var(--accent); min-height: 1.2em; }
+[data-fallback] { margin-top: var(--s2); }
+[data-fallback] textarea { font-family: var(--font-mono); font-size: .8125rem; }
+
+/* Футер */
+.foot { border-top: 1px solid var(--line); padding: var(--s4) 0; font-size: var(--s1); color: var(--muted); }
+.foot__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); }
+.foot a { color: var(--ink); }
+.foot a:hover { color: var(--accent); }
+.foot__legal { margin-top: var(--s3); display: grid; gap: .3rem; }
+@media (max-width: 760px) { .foot__grid { grid-template-columns: 1fr; } }
+
+.callbar { display: none; }
+@media (max-width: 720px) {
+  .callbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); padding-bottom: env(safe-area-inset-bottom); }
+  .callbar__b { display: flex; align-items: center; justify-content: center; min-height: 52px; background: var(--surface); color: var(--ink); text-decoration: none; font-weight: 600; font-size: .9375rem; }
+  .callbar__b--accent { background: var(--accent); color: #fff; }
+  body { padding-bottom: 56px; }
+}

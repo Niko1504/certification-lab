@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" href="data:,">
+<title>Стенд предпросмотра. Три варианта сайта центра сертификации</title>
+<style>
+  /* Указатель лаборатории: только список вариантов со ссылками.
+     Варианты открываются отдельными страницами, встроенных окон здесь нет —
+     так каждый вариант видно целиком, а не в рамке уменьшенного размера. */
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #F5F6F7; color: #14181C;
+         font: 17px/1.55 -apple-system, "Segoe UI", system-ui, sans-serif; }
+  .top { padding: 1.1rem 1.25rem .9rem; border-bottom: 1px solid #E0E3E6; background: #FFF; }
+  .in { max-width: 62rem; margin: 0 auto; }
+  h1 { font-size: clamp(1.1rem, 3.4vw, 1.35rem); margin: 0 0 .3rem; letter-spacing: -.01em; }
+  .sub { color: #5B6572; font-size: .95rem; margin: 0; }
+  main { max-width: 62rem; margin: 0 auto; padding: 1.1rem 1.25rem 3.5rem; }
+  ul.variants { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+  li.variant { background: #FFF; border: 1px solid #E0E3E6; border-radius: 12px;
+               padding: 1rem 1.1rem; display: grid; gap: .8rem;
+               grid-template-columns: 1fr auto; align-items: center; }
+  .v-name { font-weight: 650; font-size: 1.05rem; margin: 0 0 .25rem; }
+  .v-name span { color: #6B7683; font-weight: 500; }
+  .v-desc { margin: 0; color: #414A56; font-size: .95rem; }
+  .swatch { display: flex; gap: .3rem; margin-top: .7rem; }
+  .swatch i { width: 40px; height: 22px; border-radius: 5px; border: 1px solid rgba(0,0,0,.12); }
+  .go { display: inline-flex; align-items: center; gap: .45rem; white-space: nowrap;
+        background: #14181C; color: #FFF; text-decoration: none; font-weight: 600;
+        font-size: .95rem; padding: .7rem 1.1rem; border-radius: 999px; }
+  .go:hover { background: #2A3138; }
+  .extra { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid #E0E3E6;
+           font-size: .95rem; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+  .extra a { color: #0B5FBA; }
+  .note { margin: 1.5rem 0 0; color: #6B7683; font-size: .875rem; max-width: 46rem; }
+  @media (max-width: 620px) {
+    li.variant { grid-template-columns: 1fr; }
+    .go { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="in">
+    <h1>Стенд предпросмотра сайта центра сертификации</h1>
+    <p class="sub">Три варианта на одних фактах. Каждый открывается отдельной страницей, в том числе с телефона.</p>
+  </div>
+</div>
+<main>
+  <ul class="variants">
+    <li class="variant">
+      <div>
+        <p class="v-name">Вариант A <span>тёмный протокол</span></p>
+        <p class="v-desc">Тёмно-синий фон и жёлтый акцент из карточки на Avito, плакатный гротеск,
+          мягкие углы. Первый экран: заголовок с появлением по буквам и карточка «маршрут товара»
+          с полем для ссылки на товар.</p>
+        <div class="swatch" aria-hidden="true">
+          <i style="background:#0F1D38"></i><i style="background:#FFC72C"></i><i style="background:#F0F4FA;border-color:#D5DBE4"></i>
+        </div>
+      </div>
+      <a class="go" href="./a/">Открыть вариант A</a>
+    </li>
+    <li class="variant">
+      <div>
+        <p class="v-name">Вариант B <span>светлый каталог</span></p>
+        <p class="v-desc">Бумажный фон, антиква в заголовках, острые углы, линейки вместо плашек.
+          Документы собраны в стопку, которая накапливается при прокрутке.</p>
+        <div class="swatch" aria-hidden="true">
+          <i style="background:#F6F4EE"></i><i style="background:#007B36"></i><i style="background:#171D17"></i>
+        </div>
+      </div>
+      <a class="go" href="./b/">Открыть вариант B</a>
+    </li>
+    <li class="variant">
+      <div>
+        <p class="v-name">Вариант C <span>белый регламент</span></p>
+        <p class="v-desc">Белый фон и бирюзовый акцент, капсульные кнопки, центрированный первый
+          экран. Маршрут товара показан сценой из трёх этапов, которая листается прокруткой.</p>
+        <div class="swatch" aria-hidden="true">
+          <i style="background:#FFFFFF"></i><i style="background:#007777"></i><i style="background:#101A1A"></i>
+        </div>
+      </div>
+      <a class="go" href="./c/">Открыть вариант C</a>
+    </li>
+  </ul>
+
+  <div class="extra">
+    <a href="./about.html">Чем варианты отличаются</a>
+    <a href="./legal/privacy.html">Политика обработки данных (черновик)</a>
+    <a href="./legal/consent.html">Согласие (черновик)</a>
+  </div>
+
+  <p class="note">Стенд закрыт от поиска: запрет в robots.txt и мета-тег noindex на каждой странице.
+    Внутри любого варианта слева внизу есть небольшой переключатель между A, B и C — открывается
+    сразу, без возврата на эту страницу.</p>
+</main>
+</body>
+</html>

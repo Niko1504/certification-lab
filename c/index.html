@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:,">
+<title>Вариант C. Разрешительные документы: маршрут товара</title>
+<meta name="description" content="Определим, какой документ нужен вашему товару, проведём испытания в аккредитованных лабораториях и оформим бумаги с регистрацией в реестре.">
+<link rel="preload" href="../../assets/fonts/wix-madefor-display-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/nunito-sans-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts/wix-madefor-display.css">
+<link rel="stylesheet" href="../../assets/fonts/nunito-sans.css">
+<link rel="stylesheet" href="../../assets/fonts/jetbrains-mono.css">
+<link rel="stylesheet" href="../../assets/base.css">
+<link rel="stylesheet" href="theme.css">
+<script>if ('IntersectionObserver' in window) document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top__in">
+    <a class="brand" href="#top"><b>МОСКОНТРАКТ</b><span>центр сертификации</span></a>
+    <nav>
+      <a href="#docs">Документы</a>
+      <a href="#cases">Сценарии</a>
+      <a href="#process">Порядок работы</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <a class="btn btn--primary" href="#lead">Проверить товар</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 1. Первый экран: центрированная стопка -->
+  <section class="hero">
+    <div class="wrap hero__in">
+      <h1>Разрешительные документы на товар под&nbsp;ключ</h1>
+      <p class="lead">Пришлите ссылку на карточку или опишите товар словами. Ответим, какой документ нужен, что входит в работу, сколько это стоит и сколько займёт.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#lead">Проверить товар</a>
+        <a class="btn btn--outline" href="#docs">Какие документы бывают</a>
+      </div>
+      <p class="hero__facts"><span>ООО «МОСКОНТРАКТ»</span><span>Москва и вся Россия</span><span>работаем по договору</span><span>Юлия, опыт более 10 лет</span></p>
+      <p class="hero__note">Не знаете, какой документ нужен? Так и напишите: определение вида документа входит в работу.</p>
+    </div>
+  </section>
+
+  <!-- 2. Механика направления: прилипающая сцена из трёх этапов.
+       Прогресс берём у общей функции progress(): она же даёт ?t= для скриншотов. -->
+  <section class="scene" data-scene>
+    <div class="scene__sticky">
+      <div class="wrap">
+        <div class="scene__head">
+          <h2>Маршрут товара: три этапа</h2>
+          <p class="lead">Пока идёт прокрутка, этапы сменяют друг друга. Можно остановиться на любом.</p>
+        </div>
+        <ol class="stages">
+          <li data-stage="0">
+            <span class="n">этап 1</span>
+            <h3>Присылаете товар</h3>
+            <p>Ссылка на карточку, фото этикетки, название или простое описание словами.</p>
+          </li>
+          <li data-stage="1">
+            <span class="n">этап 2</span>
+            <h3>Определяем документ</h3>
+            <p>Код ТН ВЭД, применимые регламенты, схема подтверждения соответствия и перечень недостающих данных.</p>
+          </li>
+          <li data-stage="2">
+            <span class="n">этап 3</span>
+            <h3>Оформляем и передаём</h3>
+            <p>Испытания в аккредитованной лаборатории, документ от аккредитованного органа, регистрация в реестре, готовый файл у вас.</p>
+          </li>
+        </ol>
+        <div class="scene__rail" aria-hidden="true"><i data-rail="0"></i><i data-rail="1"></i><i data-rail="2"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Каталог документов: карусель на нативном скролле со снапом -->
+  <section id="docs">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <h2>Что чаще всего приходится оформлять</h2>
+        <p>Кроме этого делаем протоколы испытаний, технические условия, паспорта качества, пожарную сертификацию, СТ-1 и СТ-А, регистрацию товарных знаков.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="rail" data-xscroll>
+        <article class="reveal"><span class="tag">ТР ТС</span><h3>Сертификат ТР ТС</h3><p>Обязательное подтверждение соответствия для электроники, детских товаров, упаковки, продукции легпрома.</p></article>
+        <article class="reveal"><span class="tag">ТР ТС</span><h3>Декларация ТР ТС</h3><p>Форма, когда производитель сам заявляет соответствие. Готовим доказательную базу и регистрируем в реестре.</p></article>
+        <article class="reveal"><span class="tag">письмо</span><h3>Отказное письмо</h3><p>Подтверждает, что товар не подлежит обязательной сертификации. Просят маркетплейсы и таможня. От 1 500 ₽, от 1 рабочего дня.</p></article>
+        <article class="reveal"><span class="tag">СГР</span><h3>Свидетельство о госрегистрации</h3><p>Для товаров, которые проверяет Роспотребнадзор: бытовая химия, косметика, пищевая продукция, товары для детей.</p></article>
+        <article class="reveal"><span class="tag">прочее</span><h3>Протоколы, ТУ, паспорта</h3><p>Своя нормативная база для серийного выпуска: технические условия, паспорта качества и безопасности, обоснование безопасности.</p></article>
+        <article class="reveal"><span class="tag">СТ-1 / СТ-А</span><h3>Сертификат происхождения</h3><p>Для подтверждения страны происхождения товара при поставках и участии в закупках.</p></article>
+      </div>
+      <p class="rail__hint">Карусель прокручивается пальцем или колесом, кнопок нет: шесть документов помещаются в две прокрутки.</p>
+    </div>
+  </section>
+
+  <!-- 4. Сценарии -->
+  <section id="cases">
+    <div class="wrap">
+      <div class="sec__head reveal"><h2>С какой задачей вы пришли</h2></div>
+      <div class="cases">
+        <article class="reveal"><h3>Выхожу на маркетплейс</h3><p>Карточку не пропустят без действующего документа. Соберём комплект под площадку и скажем, что просят именно в вашей категории.</p></article>
+        <article class="reveal"><h3>Ввожу товар из Китая или ЕАЭС</h3><p>Документ нужен до ввоза: проверим код ТН ВЭД и применимые регламенты, подготовим бумаги к таможенному оформлению.</p></article>
+        <article class="reveal"><h3>Производим в России</h3><p>Серийный выпуск требует действующих документов и своей нормативной базы: ТУ, паспорта, обоснование безопасности.</p></article>
+        <article class="reveal"><h3>Площадка или Честный ЗНАК запросил документ</h3><p>Разберём требование, проверим, что уже есть у вас и у поставщика, и закроем то, чего не хватает.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Порядок работы -->
+  <section id="process">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <h2>Как проходит оформление</h2>
+        <p>Стоимость и срок фиксируем в договоре до начала работ.</p>
+      </div>
+      <div class="process reveal">
+        <ol>
+          <li>Заявка и вводные по товару</li>
+          <li>Разбор: код ТН ВЭД, регламенты, схема подтверждения</li>
+          <li>Расчёт стоимости и срока, договор</li>
+          <li>Отбор образцов и испытания в аккредитованной лаборатории</li>
+          <li>Оформление документа в аккредитованном органе по сертификации</li>
+          <li>Регистрация в реестре и передача готового документа</li>
+        </ol>
+        <aside>Испытания проводим в аккредитованных лабораториях, документы оформляем в аккредитованных органах. Номер документа и дату регистрации присылаем вместе с файлом, чтобы вы проверили запись в реестре самостоятельно.</aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Стоимость -->
+  <section id="price">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <h2>Что определяет цену и срок</h2>
+        <p class="price__anchor">Отказное письмо: от 1 500 ₽</p>
+        <p>Сертификаты, декларации и свидетельства считаем индивидуально. Ориентир «от» действует при полном пакете документов и после согласования перечня.</p>
+      </div>
+      <div class="price reveal">
+        <div><h3>Товар и код ТН ВЭД</h3><p>От классификации зависит, какой регламент применяется и попадает ли товар под обязательную сертификацию.</p></div>
+        <div><h3>Схема подтверждения</h3><p>Сертификация, декларирование или отказное письмо: три разных объёма работ.</p></div>
+        <div><h3>Испытания</h3><p>Число показателей и лабораторий. Часть товаров испытывается по сокращённой программе, часть требует полного набора.</p></div>
+        <div><h3>Сроки</h3><p>Отказное письмо оформляется быстрее остальных. По серийным документам срок зависит от лаборатории и органа.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Реестр -->
+  <section class="statement">
+    <div class="wrap">
+      <blockquote class="reveal">Настоящий документ проверяется в реестре, и это делает клиент, а не мы.</blockquote>
+      <p class="reveal">Каждый сертификат, декларация и свидетельство попадают в официальный реестр. Вместе с готовым файлом присылаем номер документа, дату регистрации, орган или лабораторию, срок действия и область применения.</p>
+    </div>
+  </section>
+
+  <!-- 8. Вопросы -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec__head reveal"><h2>Отвечаем на то, что спрашивают чаще всего</h2></div>
+      <div class="faq reveal">
+        <div><h3>Я не знаю, какой документ нужен</h3><p>Так приходит большинство. Опишите товар словами или пришлите ссылку: определим вид документа и скажем, какие данные нужны.</p></div>
+        <div><h3>Чем декларация отличается от сертификата</h3><p>Сертификат выдаёт аккредитованный орган по результатам испытаний, декларацию регистрирует заявитель под свою ответственность. Что подходит вашему товару, определяет технический регламент.</p></div>
+        <div><h3>Можно ли продавать по документам поставщика</h3><p>Иногда да, если документ действует на ваше имя или покрывает вашу партию. Пришлите то, что есть: проверим и скажем, чего не хватает.</p></div>
+        <div><h3>Что будет, если продавать без документов</h3><p>Площадка может заблокировать карточку, а проверяющие выписать штраф и изъять партию. Восстанавливать это дороже, чем оформить документ заранее.</p></div>
+        <div><h3>Сколько это стоит</h3><p>Оформление отказного письма от 1 500 ₽. Сертификаты, декларации и свидетельства считаем индивидуально: цена зависит от товара, кода ТН ВЭД и объёма испытаний.</p></div>
+        <div><h3>Как проверить готовый документ</h3><p>По номеру и дате регистрации в официальном реестре. Эти данные присылаем вместе с файлом документа.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Заявка -->
+  <section id="lead">
+    <div class="wrap">
+      <div class="panel reveal">
+        <div>
+          <h2>Проверим ваш товар</h2>
+          <p class="lead">Опишите товар, в ответ придут вид документа, срок и стоимость. Консультация бесплатная.</p>
+        </div>
+        <form data-lead-form="" novalidate>
+          <div class="field">
+            <label for="c-name">Как к вам обращаться</label>
+            <input id="c-name" name="name" type="text" required>
+          </div>
+          <div class="field">
+            <label for="c-contact">Телефон, Telegram или MAX</label>
+            <input id="c-contact" name="contact" type="text" required>
+          </div>
+          <div class="field">
+            <label for="c-item">Что за товар</label>
+            <input id="c-item" name="item" type="text" placeholder="Ссылка на карточку, название или простое описание">
+          </div>
+          <label class="check"><input type="checkbox" name="consent" value="yes" required> Согласен на обработку персональных данных</label>
+          <button class="btn btn--primary" type="submit">Отправить заявку</button>
+          <span data-status role="status" aria-live="polite"></span>
+          <div data-fallback hidden>
+            <p class="muted">Скопируйте текст и отправьте его в удобный канал: телефон <a href="tel:+79856689000">+7 985 668-90-00</a>, Telegram <a href="https://t.me/nikolay_hml">@nikolay_hml</a> или MAX.</p>
+            <label class="sr-only" for="c-out">Текст заявки</label>
+            <textarea id="c-out" data-fallback-text readonly></textarea>
+            <button class="btn btn--outline" type="button" data-copy>Скопировать заявку</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <p><b>МОСКОНТРАКТ</b>, центр сертификации. Москва, дистанционно по всей России.</p>
+      <p>Специалист Юлия ведёт заявку от первого вопроса до готового документа.</p>
+    </div>
+    <div>
+      <p>Телефон <a href="tel:+79856689000">+7 985 668-90-00</a></p>
+      <p>Telegram <a href="https://t.me/nikolay_hml">@nikolay_hml</a></p>
+      <p>Почта: появится вместе с доменом</p>
+      <p>Часы ответа: 10:00-19:00 по Москве</p>
+    </div>
+    <div>
+      <p><a href="#lead">Оставить заявку</a></p>
+      <p><a href="../legal/privacy.html">Политика обработки данных</a></p>
+      <p><a href="../legal/consent.html">Согласие на обработку</a></p>
+    </div>
+  </div>
+  <div class="wrap foot__legal">
+    <p>ООО «МОСКОНТРАКТ», ИНН и ОГРН указываются после подтверждения реквизитов.</p>
+    <p>Не является публичной офертой. Стоимость и сроки определяются договором.</p>
+  </div>
+</footer>
+
+<script type="module" src="../../assets/base.js"></script>
+<script type="module" src="app.js"></script>
+
+<div class="callbar" role="group" aria-label="Быстрая связь">
+  <a class="callbar__b" href="tel:+79856689000">Позвонить</a>
+  <a class="callbar__b" href="https://t.me/nikolay_hml">Telegram</a>
+  <a class="callbar__b callbar__b--accent" href="#lead">Заявка</a>
+</div>
+<script src="../assets/variants.js" defer></script>
+</body>
+</html>
