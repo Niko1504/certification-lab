@@ -489,3 +489,6 @@ details summary:focus-visible {
 .foot a:hover { color: var(--accent); }
 .foot__legal { margin-top: var(--s3); display: grid; gap: .35rem; }
 @media (max-width: 760px) { .foot__grid { grid-template-columns: 1fr; } }
+
+/* Что нужно прислать для заявки — строка под сеткой документов */
+.docs-ask { margin-top: var(--s3); max-width: 74ch; line-height: 1.5; }

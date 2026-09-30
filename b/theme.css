@@ -223,3 +223,6 @@ form textarea { min-height: 92px; }
   .callbar__b--accent { background: var(--accent); color: #fff; }
   body { padding-bottom: 56px; }
 }
+
+/* Что нужно прислать для заявки — строка под сеткой документов */
+.docs-ask { margin-top: var(--s3); max-width: 74ch; line-height: 1.5; }
