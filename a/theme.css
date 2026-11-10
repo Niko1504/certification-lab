@@ -277,6 +277,65 @@ section { padding: var(--s5) 0; }
 .steps p { color: var(--muted); max-width: 54ch; }
 @media (max-width: 720px) { .steps li { grid-template-columns: 1fr; gap: .35rem; } }
 
+/* 2b. Порядок работы: шесть этапов карточками, номер — водяным знаком */
+.sec__head .eyebrow {
+  font-family: var(--font-mono);
+  font-size: .875rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .6rem;
+}
+.flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  counter-reset: flow;
+}
+.flow > li {
+  list-style: none;
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: var(--s3);
+  display: grid;
+  gap: .5rem;
+  align-content: start;
+}
+.flow > li::before {
+  counter-increment: flow;
+  content: counter(flow, decimal-leading-zero);
+  position: absolute;
+  top: .9rem;
+  right: var(--s2);
+  font-family: var(--font-mono);
+  font-size: 2.25rem;
+  line-height: 1;
+  color: var(--muted);
+  opacity: .45;
+}
+.flow h3 { font-size: 1.15rem; padding-right: 3.2rem; }
+.flow p { color: var(--muted); font-size: var(--s1); }
+.flow__foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
+  gap: var(--s4);
+  align-items: start;
+  margin-top: var(--s3);
+}
+.flow__side {
+  border-left: 2px solid var(--accent);
+  padding-left: var(--s2);
+  color: var(--muted);
+  font-size: var(--s1);
+}
+@media (max-width: 980px) { .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) { .flow__foot { grid-template-columns: 1fr; gap: var(--s2); } }
+@media (max-width: 620px) { .flow { grid-template-columns: 1fr; } }
+
 /* 3. Документы — четыре равных плитки */
 .docs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
 .docs article { background: var(--ground); padding: var(--s3); display: grid; gap: .65rem; align-content: start; }
