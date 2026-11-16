@@ -123,9 +123,11 @@ a { color: inherit; }
   gap: var(--s3);
   min-height: 68px;
 }
-.brand { display: flex; align-items: baseline; gap: .5rem; text-decoration: none; }
-.brand b { font-family: var(--font-display); font-weight: 600; letter-spacing: .01em; font-size: 1.05rem; }
-.brand span { color: var(--muted); font-size: var(--s1); }
+.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
+.brand__mark { width: 36px; height: 36px; flex: none; display: block; }
+.brand__text { display: grid; gap: .14rem; min-width: 0; }
+.brand b { font-family: var(--font-display); font-weight: 600; letter-spacing: .015em; font-size: 1.15rem; line-height: 1.05; }
+.brand__text > span { color: var(--muted); font-size: .8125rem; letter-spacing: .015em; line-height: 1.25; }
 .top nav { margin-left: auto; display: flex; gap: var(--s3); font-size: var(--s1); }
 .top nav a { color: var(--muted); text-decoration: none; }
 .top nav a:hover { color: var(--ink); }
@@ -134,9 +136,10 @@ a { color: inherit; }
 @media (max-width: 900px) { .top nav { display: none; } }
 @media (max-width: 640px) {
   .top__in { gap: var(--s2); }
-  .brand span { display: none; }
+  .brand__text > span { display: none; }
+  .brand__mark { width: 30px; height: 30px; }
   .brand b { font-size: 1rem; }
-  .top .btn { padding-inline: 1rem; font-size: .9375rem; }
+  .top .btn { padding-inline: .8rem; font-size: .875rem; white-space: nowrap; }
 }
 
 /* ── Первый экран: слева заявление, справа начало маршрута ─────────────── */
