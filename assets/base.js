@@ -67,6 +67,7 @@ if (fine && !calm) {
   addEventListener('resize', () => { raf = 0; target = current = scrollY; }, { passive: true });
 
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    if (a.hasAttribute('data-quick-lead')) return; /* это кнопка окна, не якорь */
     a.addEventListener('click', (e) => {
       const el = document.querySelector(a.getAttribute('href'));
       if (!el) return;
@@ -98,17 +99,18 @@ const telFormat = (d) => {
   if (d.length >= 10) out += '-' + d.slice(9, 11);
   return out;
 };
-document.querySelectorAll('[data-mask="tel"]').forEach((input) => {
+const bindTel = (input) => {
   input.addEventListener('input', () => { input.value = telFormat(telDigits(input.value)); });
   input.addEventListener('blur', () => {
     if (input.value && input.value.replace(/\D/g, '').length < 11) return;
     input.value = telFormat(telDigits(input.value));
   });
-});
+};
+document.querySelectorAll('[data-mask="tel"]').forEach(bindTel);
 
 /* Форма: сначала пробуем отправить на настроенный адрес, при неудаче честно
    показываем запасной путь — заявку можно скопировать и отправить вручную. */
-document.querySelectorAll('[data-lead-form]').forEach((form) => {
+const bindLeadForm = (form) => {
   const status = form.querySelector('[data-status]');
   const fallback = form.querySelector('[data-fallback]');
   const out = form.querySelector('[data-fallback-text]');
@@ -118,7 +120,7 @@ document.querySelectorAll('[data-lead-form]').forEach((form) => {
     const names = {
       phone: 'Телефон', email: 'E-mail', name: 'Имя', contact: 'Связь',
       item: 'Продукция', product: 'Продукция', comment: 'Комментарий',
-      service: 'Услуга',
+      service: 'Услуга', source: 'Источник',
     };
     const lines = ['Заявка с сайта центра сертификации'];
     d.forEach((value, key) => {
@@ -159,11 +161,15 @@ document.querySelectorAll('[data-lead-form]').forEach((form) => {
         if (!res.ok) throw new Error(String(res.status));
         status.textContent = 'Заявка отправлена. Специалист свяжется с вами.';
         form.reset();
+        form.dispatchEvent(new Event('lead-sent'));
         return;
       } catch (err) {
         status.textContent = '';
       }
     }
+    /* Запасной путь: адрес приёма не настроен или запрос не прошёл. Говорим
+       прямо, что делать, — «Отправляем…» навсегда выглядит как поломка. */
+    status.textContent = 'Заявка готова — отправьте её в удобный канал.';
     out.value = compose();
     fallback.hidden = false;
     fallback.querySelector('textarea')?.focus();
@@ -178,11 +184,68 @@ document.querySelectorAll('[data-lead-form]').forEach((form) => {
       status.textContent = 'Скопируйте текст из поля вручную.';
     }
   });
-});
+};
 
-/* Форма заявки одна и стоит на первом экране, поэтому передача полей из
-   карточки не нужна: посетитель заполняет форму там, где её видит, и
-   отправляет её одним нажатием. Запасной путь «скопировать заявку» работает
-   как прежде. */
+document.querySelectorAll('[data-lead-form]').forEach(bindLeadForm);
+
+/* ── Быстрая заявка по кнопке «Задать вопрос» ─────────────────────────────
+   Кнопка не уводит к большой форме на первом экране: у человека с вопросом нет
+   ни времени, ни желания заполнять три поля. Открывается окно с одним полем —
+   телефоном. Окно нативное <dialog>: держит фокус, закрывается по Esc и по
+   клику мимо. Без JS кнопка остаётся обычной ссылкой на форму. */
+let quickDialog = null;
+
+const buildQuick = () => {
+  const d = document.createElement('dialog');
+  d.className = 'quick';
+  d.setAttribute('aria-labelledby', 'quick-title');
+  d.innerHTML = `
+    <div class="quick__box">
+      <button class="quick__close" type="button" data-quick-close aria-label="Закрыть окно">✕</button>
+      <p class="quick__eyebrow">Быстрая заявка</p>
+      <h2 id="quick-title">Оставьте телефон — перезвоним</h2>
+      <p class="quick__sub">Ответим на вопрос и скажем, какой документ нужен вашему товару.</p>
+      <form data-lead-form="" novalidate>
+        <input type="hidden" name="source" value="Кнопка «Задать вопрос»">
+        <label class="sr-only" for="quick-phone">Телефон</label>
+        <input id="quick-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-mask="tel" required>
+        <button class="btn btn--primary" type="submit">Жду звонка</button>
+        <span data-status role="status" aria-live="polite"></span>
+        <p class="quick__note">Нажимая кнопку, вы соглашаетесь с <a href="../legal/privacy.html">политикой конфиденциальности</a>. Свяжемся за 15 минут в рабочее время.</p>
+        <div data-fallback hidden>
+          <p class="quick__note">Отправьте номер в удобный канал: <a href="tel:+79856689000">+7 985 668-90-00</a> или <a href="https://t.me/nikolay_hml">@nikolay_hml</a>.</p>
+          <textarea data-fallback-text readonly aria-label="Текст заявки"></textarea>
+          <button class="btn btn--ghost" type="button" data-copy>Скопировать</button>
+        </div>
+      </form>
+    </div>`;
+  document.body.append(d);
+
+  bindTel(d.querySelector('input[data-mask="tel"]'));
+  const form = d.querySelector('form');
+  bindLeadForm(form);
+  /* Успешная отправка: показываем подтверждение и закрываем окно сами —
+     второй раз нажимать «Жду звонка» человек не должен. */
+  form.addEventListener('lead-sent', () => setTimeout(() => d.close(), 1800));
+  d.querySelector('[data-quick-close]').addEventListener('click', () => d.close());
+  /* Затемнение — это сам <dialog>: содержимое лежит внутри .quick__box. */
+  d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+  d.addEventListener('close', () => document.documentElement.classList.remove('quick-open'));
+  return d;
+};
+
+const openQuick = () => {
+  quickDialog = quickDialog || buildQuick();
+  document.documentElement.classList.add('quick-open');
+  if (typeof quickDialog.showModal === 'function') quickDialog.showModal();
+  else quickDialog.setAttribute('open', '');
+  requestAnimationFrame(() => quickDialog.querySelector('input[data-mask="tel"]').focus({ preventScroll: true }));
+};
+
+/* Кнопка «Задать вопрос» помечена data-quick-lead. Без атрибута ссылка ведёт
+   к форме, как раньше: поведение менять не обязательно всем страницам сразу. */
+document.querySelectorAll('[data-quick-lead]').forEach((el) => {
+  el.addEventListener('click', (e) => { e.preventDefault(); openQuick(); });
+});
 
 export { progress };
