@@ -188,7 +188,6 @@ a { color: inherit; }
 .hero__adv b { display: block; font-weight: 600; }
 .hero__adv span { display: block; color: var(--muted); font-size: .9375rem; line-height: 1.45; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: .75rem; margin: var(--s3) 0 var(--s2); }
-.hero__trust { font-size: .9375rem; color: var(--muted); }
 .hero h1 .kin { display: inline; }
 .hero h1 .kin-word { display: inline-block; white-space: nowrap; }
 .hero h1 .kin span {
