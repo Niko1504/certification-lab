@@ -135,11 +135,19 @@ a { color: inherit; }
 .brand { min-width: 0; overflow: hidden; white-space: nowrap; }
 @media (max-width: 900px) { .top nav { display: none; } }
 @media (max-width: 640px) {
-  .top__in { gap: var(--s2); }
+  .top__in { gap: .5rem; }
   .brand__text > span { display: none; }
   .brand__mark { width: 30px; height: 30px; }
   .brand b { font-size: 1rem; }
-  .top .btn { padding-inline: .8rem; font-size: .875rem; white-space: nowrap; }
+  .top .btn { padding-inline: .55rem; font-size: .8125rem; white-space: nowrap; }
+}
+@media (max-width: 380px) {
+  .brand__mark { width: 24px; height: 24px; }
+  .brand b { font-size: .875rem; }
+  .top .btn { padding-inline: .45rem; font-size: .78125rem; }
+}
+@media (max-width: 340px) {
+  .top .btn { display: none; }
 }
 
 /* ── Первый экран: слева заявление, справа начало маршрута ─────────────── */
