@@ -1,89 +1,52 @@
-/* Переключатель вариантов оформления.
+/* Переключатель версий сайта: ночная и дневная.
 
-   Задача: из любого варианта перейти в соседний одним нажатием, не возвращаясь
-   в лабораторию. Скрипт вставляется одной строкой в каждый вариант, поэтому
-   он сам собирает разметку и собственные стили: общие стили вариантов трогать
-   нельзя, у них разные палитры. Классы с префиксом vswitch, чтобы не совпасть
-   ни с одним вариантом. */
+   Две версии — это одни и те же страницы в двух палитрах: /a/ ночная, /d/ дневная.
+   Кнопка одна и живёт поверх страницы, потому что шапка у обеих версий плотная
+   (логотип, меню, кнопка заявки), и вставлять в неё ещё один элемент на телефоне
+   некуда. Адрес сохраняет остальной путь: /a/services/x/ -> /d/services/x/. */
 (function () {
-  var VARIANTS = [
-    { id: 'a', label: 'A', title: 'Тёмный протокол' },
-    { id: 'b', label: 'B', title: 'Светлый каталог' },
-    { id: 'c', label: 'C', title: 'Белый регламент' },
-    { id: 'd', label: 'D', title: 'Светлый протокол' }
-  ];
-
-  /* Определяем текущий вариант по первому сегменту пути: /a/, /b/, /c/. */
+  var OTHER = { a: 'd', d: 'a' };
   var seg = (location.pathname.split('/').filter(Boolean)[0] || '').toLowerCase();
-  var current = VARIANTS.some(function (v) { return v.id === seg; }) ? seg : null;
+  var current = OTHER[seg] ? seg : null;
 
-  /* Сохраняем строку запроса: в ней бывают служебные режимы предпросмотра. */
-  var query = location.search;
+  var SUN = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>';
+  var MOON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.4A8.4 8.4 0 0 1 9.6 4a8.4 8.4 0 1 0 10.4 10.4Z"/></svg>';
 
   var style = document.createElement('style');
   style.textContent = [
-    '.vswitch{position:fixed;left:16px;bottom:16px;z-index:90;display:flex;align-items:center;',
-    'gap:1px;padding:3px;border-radius:999px;background:rgba(16,20,26,.86);',
-    'box-shadow:0 10px 26px -12px rgba(0,0,0,.6);backdrop-filter:blur(6px);',
-    'font:500 12px/1 -apple-system,"Segoe UI",Roboto,sans-serif;font-style:normal;letter-spacing:0;',
-    'color:#fff;text-transform:none;opacity:.78;transition:opacity .18s ease;}',
-    '.vswitch:hover,.vswitch:focus-within{opacity:1;}',
-    '.vswitch a,.vswitch span{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 11px;',
-    'border-radius:999px;color:#E8ECF3;text-decoration:none;font:inherit;white-space:nowrap;}',
-    '.vswitch a:hover{background:rgba(255,255,255,.14);color:#fff;}',
-    '.vswitch .vswitch__on{background:#fff;color:#11161D;font-weight:600;}',
-    '.vswitch .vswitch__lab{opacity:.75;}',
-    '@media (max-width:700px){.vswitch{left:8px;bottom:8px;font-size:12px;}',
-    '.vswitch a,.vswitch span{height:28px;padding:0 9px;}}',
-    /* На варианте с нижней плашкой связи поднимаем переключатель, чтобы они не слиплись. */
+    '.vswitch{position:fixed;left:16px;bottom:16px;z-index:90;display:inline-flex;align-items:center;',
+    'justify-content:center;width:40px;height:40px;border-radius:999px;text-decoration:none;',
+    'box-shadow:0 10px 24px -12px rgba(0,0,0,.55);opacity:.8;transition:opacity .18s ease,transform .18s ease;}',
+    '.vswitch:hover,.vswitch:focus-visible{opacity:1;transform:translateY(-1px);}',
+    '.vswitch svg{display:block;}',
+    /* на дневной версии кнопка тёмная (переход в ночь), на ночной — светлая */
+    '.vswitch--to-night{background:#0F1D38;color:#FFC93C;border:1px solid rgba(15,29,56,.14);}',
+    '.vswitch--to-day{background:#FFFFFF;color:#0F1D38;border:1px solid rgba(15,29,56,.16);}',
     'body:has(.callbar) .vswitch,body.has-callbar .vswitch{bottom:76px;}',
+    '@media (max-width:700px){.vswitch{left:10px;bottom:10px;width:38px;height:38px;}',
+    'body:has(.callbar) .vswitch,body.has-callbar .vswitch{bottom:72px;}}',
     '@media print{.vswitch{display:none;}}'
   ].join('');
   document.head.appendChild(style);
 
-  var bar = document.createElement('nav');
-  bar.className = 'vswitch';
-  bar.setAttribute('aria-label', 'Переключение вариантов оформления');
+  if (!current) return;
 
-  var home = document.createElement('a');
-  home.href = '/';
-  home.className = 'vswitch__lab';
-  var narrow = window.matchMedia('(max-width: 560px)');
-  function syncLabel() { home.textContent = narrow.matches ? '←' : '← Все'; }
-  syncLabel();
-  narrow.addEventListener('change', syncLabel);
-  home.title = 'Все варианты и правовые документы';
-  bar.appendChild(home);
-
-  VARIANTS.forEach(function (v) {
-    var node;
-    if (v.id === current) {
-      node = document.createElement('span');
-      node.className = 'vswitch__on';
-      node.setAttribute('aria-current', 'true');
-    } else {
-      node = document.createElement('a');
-      node.href = '/' + v.id + '/' + query;
-    }
-    node.textContent = v.label;
-    node.title = v.title;
-    node.style.textDecoration = 'none';
-    bar.appendChild(node);
-  });
+  var next = OTHER[current];
+  var a = document.createElement('a');
+  a.className = 'vswitch ' + (next === 'd' ? 'vswitch--to-day' : 'vswitch--to-night');
+  a.href = location.pathname.replace(/^\/[a-d]\//i, '/' + next + '/') + location.search;
+  a.setAttribute('aria-label', next === 'd' ? 'Дневная версия сайта' : 'Ночная версия сайта');
+  a.title = next === 'd' ? 'Дневная версия' : 'Ночная версия';
+  a.innerHTML = next === 'd' ? SUN : MOON;
 
   function mount() {
     if (document.body) {
-      document.body.appendChild(bar);
-      /* Вариант A может отрисовать нижнюю плашку связи только своим скриптом,
-         поэтому после вставки помечаем body, если плашка появилась. */
+      document.body.appendChild(a);
       if (document.querySelector('.callbar')) document.body.classList.add('has-callbar');
     }
   }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount);
-  } else {
-    mount();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
+  else mount();
   window.addEventListener('load', function () {
     if (document.querySelector('.callbar')) document.body.classList.add('has-callbar');
   });
