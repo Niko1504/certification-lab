@@ -53,7 +53,7 @@
 .doc li { margin-top: .4rem; line-height: 1.6; }
 
 .doc a {
-  color: var(--accent-text);
+  color: var(--ink);
   text-decoration: underline;
   text-underline-offset: .18em;
   text-decoration-thickness: 1px;
@@ -75,7 +75,7 @@
   font-size: .875rem;
   line-height: 1.5;
 }
-.doc-foot a { color: var(--accent-text); text-decoration: none; }
+.doc-foot a { color: var(--ink); text-decoration: none; }
 .doc-foot a:hover { text-decoration: underline; text-underline-offset: .18em; }
 .doc-foot__links { display: flex; flex-wrap: wrap; gap: var(--s3); }
 
