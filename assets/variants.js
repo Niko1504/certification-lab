@@ -17,7 +17,7 @@
   style.textContent = [
     '.vswitch{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px 0 8px;',
     'margin-left:auto;border:1px solid currentColor;border-radius:999px;text-decoration:none;',
-    'font:inherit;font-size:.8125rem;line-height:1;color:inherit;opacity:.72;',
+    'font:inherit;font-size:.8125rem;line-height:1;color:inherit;opacity:.88;',
     'transition:opacity .18s ease,border-color .18s ease;}',
     '.vswitch:hover,.vswitch:focus-visible{opacity:1;border-color:currentColor;}',
     '.vswitch svg{display:block;flex:none;}',
