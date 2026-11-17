@@ -58,7 +58,7 @@ body {
   line-height: 1.6;
   color: var(--ink);
   background:
-    radial-gradient(1200px 620px at 88% -8%, rgba(255, 201, 60, .30), transparent 62%),
+    radial-gradient(1200px 620px at 88% -8%, rgba(15, 29, 56, .05), transparent 62%),
     linear-gradient(168deg, var(--ground) 0%, var(--ground-deep) 100%);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
@@ -179,8 +179,8 @@ a { color: inherit; }
   display: grid;
   place-items: center;
   border-radius: 999px;
-  background: var(--accent);
-  color: #0F1D38;
+  background: var(--ink);
+  color: #FFFFFF;
   font-size: .78rem;
   font-weight: 700;
   line-height: 1;

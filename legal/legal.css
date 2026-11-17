@@ -12,8 +12,8 @@
 }
 
 .doc .mark {
-  background: var(--accent-soft);
-  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  border-left: 3px solid var(--ink);
   border-radius: var(--radius-sm);
   padding: var(--s2) var(--s3);
   font-size: var(--s1);
